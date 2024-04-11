@@ -11,6 +11,9 @@ output_excel_path = os.path.join(script_dir, 'output.xlsx')
 matched_excel_path = os.path.join(script_dir, 'matched.xlsx')
 hostdeny_txt_path = os.path.join(script_dir, 'hostdeny.txt')
 
+# Number of consecutive IPs required for matching
+consecutive_threshold = 10
+
 
 # Function to read IPs from a text file
 def read_ips_from_file(filename):
@@ -69,8 +72,8 @@ for index, row in output_df.iterrows():
         else:
             consecutive_count = 1
 
-        # If 10 consecutive occurrences are found, store the IP
-        if consecutive_count == 10:
+        # If consecutive_threshold consecutive occurrences are found, store the IP
+        if consecutive_count == consecutive_threshold:
             matched_ips.append(current_ip)
 
         previous_ip = current_ip
